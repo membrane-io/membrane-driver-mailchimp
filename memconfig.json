@@ -1,0 +1,625 @@
+{
+  "schema": {
+    "types": [
+      {
+        "name": "Root",
+        "actions": [
+          {
+            "name": "endpoint",
+            "type": "String",
+            "params": [
+              {
+                "name": "method",
+                "type": "String"
+              },
+              {
+                "name": "body",
+                "type": "String"
+              },
+              {
+                "name": "path",
+                "type": "String"
+              },
+              {
+                "name": "query",
+                "type": "String"
+              },
+              {
+                "name": "headers",
+                "type": "String"
+              }
+            ]
+          },
+          {
+            "name": "configure",
+            "type": "Void",
+            "params": [
+              {
+                "name": "API_KEY",
+                "type": "String"
+              }
+            ]
+          }
+        ],
+        "fields": [
+          {
+            "name": "audiences",
+            "type": "AudienceCollection"
+          }
+        ]
+      },
+      {
+        "name": "AudienceCollection",
+        "fields": [
+          {
+            "name": "one",
+            "type": "Audience",
+            "params": [
+              {
+                "name": "id",
+                "type": "String"
+              }
+            ]
+          },
+          {
+            "name": "page",
+            "type": "AudiencePage",
+            "params": [
+              {
+                "name": "fields",
+                "type": "String"
+              },
+              {
+                "name": "count",
+                "type": "String"
+              },
+              {
+                "name": "email",
+                "type": "String"
+              },
+              {
+                "name": "offset",
+                "type": "Int"
+              }
+            ]
+          }
+        ],
+        "actions": [],
+        "events": []
+      },
+      {
+        "name": "AudiencePage",
+        "fields": [
+          {
+            "name": "items",
+            "type": "List",
+            "ofType": "Audience",
+            "params": []
+          },
+          {
+            "name": "next",
+            "type": "Ref",
+            "ofType": "AudiencePage",
+            "params": []
+          }
+        ],
+        "actions": [],
+        "events": []
+      },
+      {
+        "name": "Audience",
+        "fields": [
+          {
+            "name": "id",
+            "type": "String",
+            "params": []
+          },
+          {
+            "name": "name",
+            "type": "String",
+            "params": []
+          },
+          {
+            "name": "web_id",
+            "type": "Int"
+          },
+          {
+            "name": "permission_reminder",
+            "type": "String"
+          },
+          {
+            "name": "use_archive_bar",
+            "type": "Boolean"
+          },
+          {
+            "name": "notify_on_subscribe",
+            "type": "String"
+          },
+          {
+            "name": "notify_on_unsubscribe",
+            "type": "String"
+          },
+          {
+            "name": "date_created",
+            "type": "String"
+          },
+          {
+            "name": "list_rating",
+            "type": "Int"
+          },
+          {
+            "name": "email_type_option",
+            "type": "Boolean"
+          },
+          {
+            "name": "subscribe_url_long",
+            "type": "String"
+          },
+          {
+            "name": "subscribe_url_short",
+            "type": "String"
+          },
+          {
+            "name": "beamer_address",
+            "type": "String"
+          },
+          {
+            "name": "visibility",
+            "type": "String"
+          },
+          {
+            "name": "double_optin",
+            "type": "Boolean"
+          },
+          {
+            "name": "has_welcome",
+            "type": "Boolean"
+          },
+          {
+            "name": "marketing_permissions",
+            "type": "Boolean"
+          },
+          {
+            "name": "contact",
+            "type": "Contact"
+          },
+          {
+            "name": "stats",
+            "type": "Stats"
+          },
+          {
+            "name": "members",
+            "type": "MemberCollection"
+          }
+        ],
+        "events": [
+          {
+            "name": "subscriptions",
+            "type": "MemberEvent"
+          }
+        ]
+      },
+      {
+        "name": "MemberCollection",
+        "fields": [
+          {
+            "name": "one",
+            "type": "Member",
+            "params": [
+              {
+                "name": "hash",
+                "type": "String"
+              }
+            ]
+          },
+          {
+            "name": "page",
+            "type": "MemberPage",
+            "params": [
+              {
+                "name": "fields",
+                "type": "String"
+              },
+              {
+                "name": "count",
+                "type": "String"
+              },
+              {
+                "name": "email",
+                "type": "String"
+              },
+              {
+                "name": "offset",
+                "type": "Int"
+              }
+            ]
+          }
+        ],
+        "actions": [],
+        "events": []
+      },
+      {
+        "name": "MemberPage",
+        "fields": [
+          {
+            "name": "items",
+            "type": "List",
+            "ofType": "Member",
+            "params": []
+          },
+          {
+            "name": "next",
+            "type": "Ref",
+            "ofType": "MemberPage",
+            "params": []
+          }
+        ],
+        "actions": [],
+        "events": []
+      },
+      {
+        "name": "Member",
+        "fields": [
+          {
+            "name": "id",
+            "type": "String"
+          },
+          {
+            "name": "email_address",
+            "type": "String",
+            "hints": {
+              "primary": true
+            }
+          },
+          {
+            "name": "unique_email_id",
+            "type": "String"
+          },
+          {
+            "name": "contact_id",
+            "type": "String"
+          },
+          {
+            "name": "full_name",
+            "type": "String"
+          },
+          {
+            "name": "web_id",
+            "type": "Int"
+          },
+          {
+            "name": "email_type",
+            "type": "String"
+          },
+          {
+            "name": "status",
+            "type": "String"
+          },
+          {
+            "name": "unsubscribe_reason",
+            "type": "String"
+          },
+          {
+            "name": "consents_to_one_to_one_messaging",
+            "type": "Boolean"
+          },
+          {
+            "name": "merge_fields",
+            "type": "MergeFields"
+          },
+          {
+            "name": "interests",
+            "type": "Interests"
+          },
+          {
+            "name": "stats",
+            "type": "Stats"
+          },
+          {
+            "name": "ip_signup",
+            "type": "String"
+          },
+          {
+            "name": "timestamp_signup",
+            "type": "String"
+          },
+          {
+            "name": "ip_opt",
+            "type": "String"
+          },
+          {
+            "name": "timestamp_opt",
+            "type": "String"
+          },
+          {
+            "name": "member_rating",
+            "type": "Int"
+          },
+          {
+            "name": "last_changed",
+            "type": "String"
+          },
+          {
+            "name": "language",
+            "type": "String"
+          },
+          {
+            "name": "vip",
+            "type": "Boolean"
+          },
+          {
+            "name": "email_client",
+            "type": "String"
+          },
+          {
+            "name": "location",
+            "type": "Location"
+          },
+          {
+            "name": "marketing_permissions",
+            "type": "List",
+            "ofType": "MarketingPermissions"
+          },
+          {
+            "name": "last_note",
+            "type": "LastNote"
+          },
+          {
+            "name": "source",
+            "type": "String"
+          },
+          {
+            "name": "tags_count",
+            "type": "Int"
+          },
+          {
+            "name": "tags",
+            "type": "List",
+            "ofType": "Tags"
+          },
+          {
+            "name": "list_id",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "MergeFields",
+        "fields": [
+          {
+            "name": "property1",
+            "type": "String"
+          },
+          {
+            "name": "property2",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "Interests",
+        "fields": [
+          {
+            "name": "property1",
+            "type": "String"
+          },
+          {
+            "name": "property2",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "Location",
+        "fields": [
+          {
+            "name": "latitude",
+            "type": "Float"
+          },
+          {
+            "name": "longitude",
+            "type": "Float"
+          },
+          {
+            "name": "gmtoff",
+            "type": "Int"
+          },
+          {
+            "name": "dstoff",
+            "type": "Int"
+          },
+          {
+            "name": "country_code",
+            "type": "String"
+          },
+          {
+            "name": "timezone",
+            "type": "String"
+          },
+          {
+            "name": "region",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "MarketingPermissions",
+        "fields": [
+          {
+            "name": "marketing_permission_id",
+            "type": "String"
+          },
+          {
+            "name": "text",
+            "type": "String"
+          },
+          {
+            "name": "enabled",
+            "type": "Boolean"
+          }
+        ]
+      },
+      {
+        "name": "LastNote",
+        "fields": [
+          {
+            "name": "note_id",
+            "type": "Int"
+          },
+          {
+            "name": "created_at",
+            "type": "String"
+          },
+          {
+            "name": "created_by",
+            "type": "String"
+          },
+          {
+            "name": "note",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "Tags",
+        "fields": [
+          {
+            "name": "id",
+            "type": "Int"
+          },
+          {
+            "name": "name",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "Contact",
+        "fields": [
+          {
+            "name": "company",
+            "type": "String"
+          },
+          {
+            "name": "address1",
+            "type": "String"
+          },
+          {
+            "name": "address2",
+            "type": "String"
+          },
+          {
+            "name": "city",
+            "type": "String"
+          },
+          {
+            "name": "state",
+            "type": "String"
+          },
+          {
+            "name": "zip",
+            "type": "String"
+          },
+          {
+            "name": "country",
+            "type": "String"
+          },
+          {
+            "name": "phone",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "Stats",
+        "fields": [
+          {
+            "name": "member_count",
+            "type": "Int"
+          },
+          {
+            "name": "total_contacts",
+            "type": "Int"
+          },
+          {
+            "name": "unsubscribe_count",
+            "type": "Int"
+          },
+          {
+            "name": "cleaned_count",
+            "type": "Int"
+          },
+          {
+            "name": "member_count_since_send",
+            "type": "Int"
+          },
+          {
+            "name": "unsubscribe_count_since_send",
+            "type": "Int"
+          },
+          {
+            "name": "cleaned_count_since_send",
+            "type": "Int"
+          },
+          {
+            "name": "campaign_count",
+            "type": "Int"
+          },
+          {
+            "name": "campaign_last_sent",
+            "type": "String"
+          },
+          {
+            "name": "merge_field_count",
+            "type": "Int"
+          },
+          {
+            "name": "avg_sub_rate",
+            "type": "Int"
+          },
+          {
+            "name": "avg_unsub_rate",
+            "type": "Int"
+          },
+          {
+            "name": "target_sub_rate",
+            "type": "Int"
+          },
+          {
+            "name": "open_rate",
+            "type": "Int"
+          },
+          {
+            "name": "click_rate",
+            "type": "Int"
+          },
+          {
+            "name": "last_sub_date",
+            "type": "String"
+          },
+          {
+            "name": "last_unsub_date",
+            "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "MemberEvent",
+        "fields": [
+          {
+            "name": "member",
+            "type": "Ref",
+            "ofType": "Member"
+          },
+          {
+            "name": "type",
+            "type": "String"
+          }
+        ]
+      }
+    ]
+  },
+  "dependencies": {
+    "http": "http:"
+  }
+}
