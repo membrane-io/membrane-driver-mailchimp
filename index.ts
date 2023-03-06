@@ -3,7 +3,7 @@
 // `state` is an object that persists across program updates. Store data here.
 import { nodes, root, state } from "membrane";
 import { toJSON, api } from "./utils";
-import SparkMD5 from "spark-md5";
+import MD5 from "spark-md5";
 
 export const Root = {
   audiences: () => ({}),
@@ -80,7 +80,7 @@ export async function endpoint({ args: { path, query, headers, body } }) {
       // get member info
       const { type, data } = event;
       // member hash is md5 of email
-      const hashId = SparkMD5.hash(data.email);
+      const hashId = MD5.hash(data.email);
       // dispatch event
       const member: any = root.audiences.one({ id: data.list_id }).members.one({ hash: hashId });
       await root.audiences.one({ id: data.list_id }).subscriptions.$emit({ member, type });
