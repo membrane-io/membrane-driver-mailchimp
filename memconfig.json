@@ -45,6 +45,10 @@
           {
             "name": "audiences",
             "type": "AudienceCollection"
+          },
+          {
+            "name": "status",
+            "type": "String"
           }
         ]
       },

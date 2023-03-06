@@ -7,6 +7,13 @@ import SparkMD5 from "spark-md5";
 
 export const Root = {
   audiences: () => ({}),
+  status: () => {
+    if (!state.token) {
+      return "Please get [API Key](https://mailchimp.com/help/about-api-keys/) and configure.";
+    } else {
+      return "Ready";
+    }
+  },
 };
 
 export const AudienceCollection = {
