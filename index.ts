@@ -2,27 +2,8 @@
 // `root` is a reference to this program's root node
 // `state` is an object that persists across program updates. Store data here.
 import { nodes, root, state } from "membrane";
-import { toJSON } from "./util";
-
-async function api(method: string, path: string, query?: any, body?: string) {
-  if (!state.token || !state.server) {
-    throw new Error("You must first invoke the configure action with an API key");
-  }
-  if (query) {
-    Object.keys(query).forEach((key) => (query[key] === undefined ? delete query[key] : {}));
-  }
-  const querystr = query && Object.keys(query).length ? `?${new URLSearchParams(query)}` : "";
-  const url = `https://${state.server}.api.mailchimp.com/3.0/${path}${querystr}`;
-  const req = {
-    method,
-    body,
-    headers: {
-      Authorization: `Basic ${Buffer.from(`anystring:${state.token}`).toString("base64")}`,
-      "Content-Type": "application/json",
-    },
-  };
-  return await fetch(url, req);
-}
+import { toJSON, api } from "./utils";
+import SparkMD5 from "spark-md5";
 
 export const Root = {
   audiences: () => ({}),
@@ -87,19 +68,17 @@ export async function configure({ args: { API_KEY } }) {
 
 export async function endpoint({ args: { path, query, headers, body } }) {
   switch (path) {
-    case "/webhook": {
+    case "/": {
       const event = toJSON(body);
+      // get member info
       const { type, data } = event;
-      await dispatchEvent(data.id, data.list_id, type);
+      // member hash is md5 of email
+      const hashId = SparkMD5.hash(data.email);
+      // dispatch event
+      const member: any = root.audiences.one({ id: data.list_id }).members.one({ hash: hashId });
+      await root.audiences.one({ id: data.list_id }).subscriptions.$emit({ member, type });
 
-      return JSON.stringify({
-        status: 200,
-      });
+      return JSON.stringify({ status: 200 });
     }
   }
-}
-
-async function dispatchEvent(userId, AudienceId, type) {
-  const member: any = root.audiences.one({ id: AudienceId }).members.one({ hash: userId });
-  return root.audiences.one({ id: AudienceId }).subscriptions.$emit({ member, type });
 }
