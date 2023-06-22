@@ -71,19 +71,23 @@
             "params": [
               {
                 "name": "fields",
-                "type": "String"
+                "type": "String",
+                "optional": true
               },
               {
                 "name": "count",
-                "type": "String"
+                "type": "String",
+                "optional": true
               },
               {
                 "name": "email",
-                "type": "String"
+                "type": "String",
+                "optional": true
               },
               {
                 "name": "offset",
-                "type": "Int"
+                "type": "Int",
+                "optional": true
               }
             ]
           }
@@ -222,19 +226,23 @@
             "params": [
               {
                 "name": "fields",
-                "type": "String"
+                "type": "String",
+                "optional": true
               },
               {
                 "name": "count",
-                "type": "String"
+                "type": "String",
+                "optional": true
               },
               {
                 "name": "email",
-                "type": "String"
+                "type": "String",
+                "optional": true
               },
               {
                 "name": "offset",
-                "type": "Int"
+                "type": "Int",
+                "optional": true
               }
             ]
           }
