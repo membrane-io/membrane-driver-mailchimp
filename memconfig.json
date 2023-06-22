@@ -14,7 +14,8 @@
               },
               {
                 "name": "body",
-                "type": "String"
+                "type": "String",
+                "optional": true
               },
               {
                 "name": "path",
@@ -22,7 +23,8 @@
               },
               {
                 "name": "query",
-                "type": "String"
+                "type": "String",
+                "optional": true
               },
               {
                 "name": "headers",
