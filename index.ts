@@ -14,7 +14,15 @@ export const Root = {
       return "Ready";
     }
   },
+  tests: () => ({}),
 };
+
+export const Tests = {
+  testGetAudiences: async () => { 
+    const items = await root.audiences.page.items.$query(`{ id }`);
+    return Array.isArray(items);
+  },
+}
 
 export const AudienceCollection = {
   one: async ({ args: { id } }) => {

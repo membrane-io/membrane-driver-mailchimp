@@ -51,6 +51,10 @@
           {
             "name": "status",
             "type": "String"
+          },
+          {
+            "name": "tests",
+            "type": "Tests"
           }
         ]
       },
@@ -628,6 +632,15 @@
           {
             "name": "type",
             "type": "String"
+          }
+        ]
+      },
+      {
+        "name": "Tests",
+        "actions": [
+          {
+            "name": "testGetAudiences",
+            "type": "Boolean"
           }
         ]
       }
