@@ -9,7 +9,7 @@ export const Root = {
   audiences: () => ({}),
   status: () => {
     if (!state.token) {
-      return "Please get [API Key](https://mailchimp.com/help/about-api-keys/) and configure.";
+      return "Please get [API Key](https://mailchimp.com/help/about-api-keys/) and [configure](:configure) it.";
     } else {
       return "Ready";
     }
@@ -18,11 +18,11 @@ export const Root = {
 };
 
 export const Tests = {
-  testGetAudiences: async () => { 
+  testGetAudiences: async () => {
     const items = await root.audiences.page.items.$query(`{ id }`);
     return Array.isArray(items);
   },
-}
+};
 
 export const AudienceCollection = {
   one: async ({ args: { id } }) => {
@@ -33,9 +33,15 @@ export const AudienceCollection = {
     const req = await api("GET", "lists", { ...args });
     const result = await req.json();
 
+    const nextOffset = (args.offset ?? 0) + result.lists.length;
+    const next =
+      nextOffset >= result.total_items
+        ? null
+        : self.page({ count: args.count, offset: nextOffset });
+
     return {
       items: result.lists,
-      next: self.page({ count: args.count, offset: result.total_items }),
+      next,
     };
   },
 };
@@ -68,9 +74,15 @@ export const MemberCollection = {
     const req = await api("GET", `lists/${id}/members`, { ...args });
     const result = await req.json();
 
+    const nextOffset = (args.offset ?? 0) + result.members.length;
+    const next =
+      nextOffset >= result.total_items
+        ? null
+        : self.page({ count: args.count, offset: nextOffset });
+
     return {
       items: result.members,
-      next: self.page({ count: args.count, offset: result.total_items }),
+      next,
     };
   },
 };
@@ -90,8 +102,12 @@ export async function endpoint({ args: { path, query, headers, body } }) {
       // member hash is md5 of email
       const hashId = MD5.hash(data.email);
       // dispatch event
-      const member: any = root.audiences.one({ id: data.list_id }).members.one({ hash: hashId });
-      await root.audiences.one({ id: data.list_id }).subscriptions.$emit({ member, type });
+      const member: any = root.audiences
+        .one({ id: data.list_id })
+        .members.one({ hash: hashId });
+      await root.audiences
+        .one({ id: data.list_id })
+        .subscriptions.$emit({ member, type });
 
       return JSON.stringify({ status: 200 });
     }
