@@ -107,7 +107,7 @@ export async function endpoint({ args: { path, query, headers, body } }) {
         .members.one({ hash: hashId });
       await root.audiences
         .one({ id: data.list_id })
-        .subscriptions.$emit({ member, type });
+        .memberSubscribed.$emit({ member, type });
 
       return JSON.stringify({ status: 200 });
     }

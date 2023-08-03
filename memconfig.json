@@ -208,7 +208,7 @@
         ],
         "events": [
           {
-            "name": "subscriptions",
+            "name": "memberSubscribed",
             "type": "MemberEvent"
           }
         ]
