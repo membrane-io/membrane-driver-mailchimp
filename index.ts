@@ -2,7 +2,7 @@
 // `root` is a reference to this program's root node
 // `state` is an object that persists across program updates. Store data here.
 import { nodes, root, state } from "membrane";
-import { toJSON, api } from "./utils";
+import { api } from "./utils";
 import MD5 from "spark-md5";
 
 export const Root = {
@@ -96,19 +96,29 @@ export async function configure({ args: { API_KEY } }) {
 export async function endpoint({ args: { path, query, headers, body } }) {
   switch (path) {
     case "/": {
-      const event = toJSON(body);
-      // get member info
-      const { type, data } = event;
-      // member hash is md5 of email
-      const hashId = MD5.hash(data.email);
-      // dispatch event
-      const member: any = root.audiences
-        .one({ id: data.list_id })
-        .members.one({ hash: hashId });
-      await root.audiences
-        .one({ id: data.list_id })
-        .memberSubscribed.$emit({ member, type });
+      // Prepare the data
+      const parsedData: any = new URLSearchParams(body);
+      const data = {};
+      for (const [key, value] of parsedData.entries()) {
+        data[key] = decodeURIComponent(value);
+      }
 
+      // subscription event data
+      const id = data["data[list_id]"];
+      const email = data["data[email]"];
+      const type = data["type"];
+
+      // member hash is md5 of email
+      const hashId = MD5.hash(email);
+
+      // get the member gref
+      const member: any = root.audiences
+        .one({ id })
+        .members.one({ hash: hashId });
+
+      // dispatch event
+      await root.audiences.one({ id }).memberSubscribed.$emit({ member, type });
+      console.log(`Received ${type} event for ${email} in list ${id}`);
       return JSON.stringify({ status: 200 });
     }
   }
