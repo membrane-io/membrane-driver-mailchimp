@@ -63,6 +63,10 @@ export const Audience = {
         events: {
           subscribe: true,
           unsubscribe: true,
+          profile: false,
+          cleaned: false,
+          upemail: false,
+          campaign: false,
         },
         sources: {
           user: true,
@@ -83,7 +87,7 @@ export const Audience = {
       const { id: listId } = self.$argsAt(root.audiences.one);
       // Delete the webhook
       const webhookId = state.subscriptions.get(self);
-      const res = await api("DELETE", `lists/${listId}/webhooks${webhookId}`);
+      const res = await api("DELETE", `lists/${listId}/webhooks/${webhookId}`);
       if (res.status !== 204) {
         throw new Error(
           `Failed to delete webhook ${webhookId}: ${
@@ -133,6 +137,7 @@ export async function configure({ args: { API_KEY } }) {
   const [, dc] = API_KEY.split("-");
   state.server = dc;
   state.token = API_KEY;
+  root.statusChanged.$emit();
 }
 
 export async function endpoint({ args: { method, path, body } }) {
