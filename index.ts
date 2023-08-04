@@ -5,6 +5,8 @@ import { nodes, root, state } from "membrane";
 import { api } from "./utils";
 import MD5 from "spark-md5";
 
+state.subscriptions = state.subscriptions ?? new Map();
+
 export const Root = {
   audiences: () => ({}),
   status: () => {
@@ -51,6 +53,46 @@ export const Audience = {
     return root.audiences.one({ id: obj.id });
   },
   members: () => ({}),
+
+  subscribed: {
+    subscribe: async ({ self, args: { email } }) => {
+      const { id: listId } = self.$argsAt(root.audiences.one);
+      // Create a webhook
+      const body = {
+        url: await nodes.process.endpointUrl,
+        events: {
+          subscribe: true,
+          unsubscribe: true,
+        },
+        sources: {
+          user: true,
+          admin: true,
+          api: true,
+        },
+      };
+      const res = await api("POST", `lists/${listId}/webhooks`, null, body);
+      if (res.status !== 200) {
+        throw new Error(
+          `Failed to create webhook: ${res.status}: ${await res.text()}`
+        );
+      }
+      const { id } = await res.json();
+      state.subscriptions.set(self, id);
+    },
+    unsubscribe: async ({ self, args: { email } }) => {
+      const { id: listId } = self.$argsAt(root.audiences.one);
+      // Delete the webhook
+      const webhookId = state.subscriptions.get(self);
+      const res = await api("DELETE", `lists/${listId}/webhooks${webhookId}`);
+      if (res.status !== 204) {
+        throw new Error(
+          `Failed to delete webhook ${webhookId}: ${
+            res.status
+          }: ${await res.text()}`
+        );
+      }
+    },
+  },
 };
 
 export const Member = {
@@ -93,32 +135,24 @@ export async function configure({ args: { API_KEY } }) {
   state.token = API_KEY;
 }
 
-export async function endpoint({ args: { path, query, headers, body } }) {
-  switch (path) {
-    case "/": {
-      // Prepare the data
-      const parsedData: any = new URLSearchParams(body);
-      const data = {};
-      for (const [key, value] of parsedData.entries()) {
-        data[key] = decodeURIComponent(value);
+export async function endpoint({ args: { method, path, body } }) {
+  if (method === "POST") {
+    switch (path) {
+      case "/": {
+        const event = new URLSearchParams(body);
+        const email = event.get("data[email]")!;
+        const listId = event.get("data[list_id]");
+        const memberId = MD5.hash(email);
+        const audience = root.audiences.one({ id: listId! });
+        const member = audience.members.one({ hash: memberId! });
+        const type = event.get("type");
+        if (type === "unsubscribe") {
+          audience.unsubscribed.$emit({ email, member, audience });
+        } else if (type === "subscribe") {
+          audience.subscribed.$emit({ email, member, audience });
+        }
       }
-      // subscription event data
-      const id = data["data[list_id]"];
-      const email = data["data[email]"];
-      const type = data["type"];
-
-      // member hash is md5 of email
-      const hashId = MD5.hash(email);
-
-      // get the member gref
-      const member: any = root.audiences
-        .one({ id })
-        .members.one({ hash: hashId });
-
-      // dispatch event
-      await root.audiences.one({ id }).memberSubscribed.$emit({ member, type });
-      console.log(`Received ${type} event for ${email} in list ${id}`);
-      return JSON.stringify({ status: 200 });
     }
   }
+  return JSON.stringify({ status: 200 });
 }
