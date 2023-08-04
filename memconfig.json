@@ -208,7 +208,11 @@
         ],
         "events": [
           {
-            "name": "memberSubscribed",
+            "name": "subscribed",
+            "type": "MemberEvent"
+          },
+          {
+            "name": "unsubscribed",
             "type": "MemberEvent"
           }
         ]
@@ -630,8 +634,13 @@
             "ofType": "Member"
           },
           {
-            "name": "type",
+            "name": "email",
             "type": "String"
+          },
+          {
+            "name": "audience",
+            "type": "Ref",
+            "ofType": "Audience"
           }
         ]
       },
