@@ -150,6 +150,8 @@ export async function endpoint({ args: { method, path, body } }) {
           audience.unsubscribed.$emit({ email, member, audience });
         } else if (type === "subscribe") {
           audience.subscribed.$emit({ email, member, audience });
+        } else {
+          console.log("Ignoring event of type", type);
         }
       }
     }
