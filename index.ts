@@ -102,7 +102,6 @@ export async function endpoint({ args: { path, query, headers, body } }) {
       for (const [key, value] of parsedData.entries()) {
         data[key] = decodeURIComponent(value);
       }
-
       // subscription event data
       const id = data["data[list_id]"];
       const email = data["data[email]"];
