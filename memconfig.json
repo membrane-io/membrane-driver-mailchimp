@@ -56,6 +56,12 @@
             "name": "tests",
             "type": "Tests"
           }
+        ],
+        "events": [
+          {
+            "name": "statusChanged",
+            "type": "Void"
+          }
         ]
       },
       {
