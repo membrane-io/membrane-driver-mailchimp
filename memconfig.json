@@ -55,6 +55,27 @@
           {
             "name": "tests",
             "type": "Tests"
+          },
+          {
+            "name": "parse",
+            "type": "List",
+            "ofType": {
+              "type": "Ref",
+              "ofType": "Audience"
+            },
+            "hints": {
+              "hidden": true
+            },
+            "params": [
+              {
+                "name": "name",
+                "type": "String"
+              },
+              {
+                "name": "value",
+                "type": "String"
+              }
+            ]
           }
         ],
         "events": [
@@ -663,5 +684,13 @@
   },
   "dependencies": {
     "http": "http:"
+  },
+  "expressions": {
+    "audience": {
+      "regex": "^[0-9a-f]{10}$",
+      "description": "An audience ID",
+      "type": "text",
+      "searchIn": "https://*.admin.mailchimp.com"
+    }
   }
 }

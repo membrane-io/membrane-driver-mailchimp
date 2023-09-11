@@ -17,6 +17,13 @@ export const Root = {
     }
   },
   tests: () => ({}),
+  parse: ({ name, value }) => {
+    switch (name) {
+      case "audience": {
+        return [root.audiences.one({ id: value })];
+      }
+    }
+  },
 };
 
 export const Tests = {
@@ -27,11 +34,11 @@ export const Tests = {
 };
 
 export const AudienceCollection = {
-  one: async ({ args: { id } }) => {
+  one: async ({ id }) => {
     const req = await api("GET", `lists/${id}`);
     return await req.json();
   },
-  page: async ({ self, args }) => {
+  page: async (args, { self }) => {
     const req = await api("GET", "lists", { ...args });
     const result = await req.json();
 
@@ -49,13 +56,13 @@ export const AudienceCollection = {
 };
 
 export const Audience = {
-  gref: ({ obj }) => {
+  gref: (_, { obj }) => {
     return root.audiences.one({ id: obj.id });
   },
   members: () => ({}),
 
   subscribed: {
-    subscribe: async ({ self, args: { email } }) => {
+    subscribe: async ({ email }, { self }) => {
       const { id: listId } = self.$argsAt(root.audiences.one);
       // Create a webhook
       const body = {
@@ -83,7 +90,7 @@ export const Audience = {
       const { id } = await res.json();
       state.subscriptions.set(self, id);
     },
-    unsubscribe: async ({ self, args: { email } }) => {
+    unsubscribe: async ({ email }, { self }) => {
       const { id: listId } = self.$argsAt(root.audiences.one);
       // Delete the webhook
       const webhookId = state.subscriptions.get(self);
@@ -100,7 +107,7 @@ export const Audience = {
 };
 
 export const Member = {
-  gref: ({ self, obj }) => {
+  gref: (_, { self, obj }) => {
     const { id: audienceId } = self.$argsAt(root.audiences.one);
 
     return root.audiences.one({ id: audienceId }).members.one({ hash: obj.id });
@@ -108,13 +115,13 @@ export const Member = {
 };
 
 export const MemberCollection = {
-  one: async ({ self, args: { hash } }) => {
+  one: async ({ hash }, { self }) => {
     const { id } = self.$argsAt(root.audiences.one);
 
     const req = await api("GET", `lists/${id}/members/${hash}`);
     return await req.json();
   },
-  page: async ({ self, args }) => {
+  page: async (args, { self }) => {
     const { id } = self.$argsAt(root.audiences.one);
 
     const req = await api("GET", `lists/${id}/members`, { ...args });
@@ -133,14 +140,14 @@ export const MemberCollection = {
   },
 };
 
-export async function configure({ args: { API_KEY } }) {
+export async function configure({ API_KEY }) {
   const [, dc] = API_KEY.split("-");
   state.server = dc;
   state.token = API_KEY;
   root.statusChanged.$emit();
 }
 
-export async function endpoint({ args: { method, path, body } }) {
+export async function endpoint({ method, path, body }) {
   if (method === "POST") {
     switch (path) {
       case "/": {
