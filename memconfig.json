@@ -30,7 +30,8 @@
                 "name": "headers",
                 "type": "String"
               }
-            ]
+            ],
+            "description": "Send an HTTP request to the Mailchimp API"
           },
           {
             "name": "configure",
@@ -40,21 +41,25 @@
                 "name": "API_KEY",
                 "type": "String"
               }
-            ]
+            ],
+            "description": "Configure the Mailchimp API with an API key"
           }
         ],
         "fields": [
           {
             "name": "audiences",
-            "type": "AudienceCollection"
+            "type": "AudienceCollection",
+            "description": "Collection of Mailchimp audiences"
           },
           {
             "name": "status",
-            "type": "String"
+            "type": "String",
+            "description": "Status of the Mailchimp driver"
           },
           {
             "name": "tests",
-            "type": "Tests"
+            "type": "Tests",
+            "description": "Tests for the Mailchimp driver"
           },
           {
             "name": "parse",
@@ -75,15 +80,18 @@
                 "name": "value",
                 "type": "String"
               }
-            ]
+            ],
+            "description": "Parsing functionality for Mailchimp data"
           }
         ],
         "events": [
           {
             "name": "statusChanged",
-            "type": "Void"
+            "type": "Void",
+            "description": "Event triggered when the status of the Mailchimp driver changes"
           }
-        ]
+        ],
+        "description": "MailChimp Driver"
       },
       {
         "name": "AudienceCollection",
@@ -94,9 +102,11 @@
             "params": [
               {
                 "name": "id",
-                "type": "String"
+                "type": "String",
+                "description": "The ID of the Mailchimp audience item"
               }
-            ]
+            ],
+            "description": "Represents a single Mailchimp audience item"
           },
           {
             "name": "page",
@@ -105,28 +115,34 @@
               {
                 "name": "fields",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "Fields to include in the Mailchimp audience page"
               },
               {
                 "name": "count",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "The number of Mailchimp audience items to include in the page"
               },
               {
                 "name": "email",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "The email address of the Mailchimp audience item"
               },
               {
                 "name": "offset",
                 "type": "Int",
-                "optional": true
+                "optional": true,
+                "description": "The offset for the Mailchimp audience page"
               }
-            ]
+            ],
+            "description": "Represents a page of Mailchimp audience items"
           }
         ],
         "actions": [],
-        "events": []
+        "events": [],
+        "description": "Collection of Mailchimp audience items"
       },
       {
         "name": "AudiencePage",
@@ -135,17 +151,20 @@
             "name": "items",
             "type": "List",
             "ofType": "Audience",
-            "params": []
+            "params": [],
+            "description": "List of audience items."
           },
           {
             "name": "next",
             "type": "Ref",
             "ofType": "AudiencePage",
-            "params": []
+            "params": [],
+            "description": "Reference to the next audience page."
           }
         ],
         "actions": [],
-        "events": []
+        "events": [],
+        "description": "Type representing a page of audience items."
       },
       {
         "name": "Audience",
@@ -153,96 +172,119 @@
           {
             "name": "id",
             "type": "String",
-            "params": []
+            "params": [],
+            "description": "Unique identifier for the audience"
           },
           {
             "name": "name",
             "type": "String",
-            "params": []
+            "params": [],
+            "description": "Name of the audience"
           },
           {
             "name": "web_id",
-            "type": "Int"
+            "type": "Int",
+            "description": "Unique identifier for the audience on the web"
           },
           {
             "name": "permission_reminder",
-            "type": "String"
+            "type": "String",
+            "description": "Reminder for the permission to send emails to the audience"
           },
           {
             "name": "use_archive_bar",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Indicates whether to display the archive bar for the audience"
           },
           {
             "name": "notify_on_subscribe",
-            "type": "String"
+            "type": "String",
+            "description": "Notification setting for new subscriptions"
           },
           {
             "name": "notify_on_unsubscribe",
-            "type": "String"
+            "type": "String",
+            "description": "Notification setting for unsubscribes"
           },
           {
             "name": "date_created",
-            "type": "String"
+            "type": "String",
+            "description": "Date when the audience was created"
           },
           {
             "name": "list_rating",
-            "type": "Int"
+            "type": "Int",
+            "description": "Rating of the audience"
           },
           {
             "name": "email_type_option",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Indicates whether email type options are available for the audience"
           },
           {
             "name": "subscribe_url_long",
-            "type": "String"
+            "type": "String",
+            "description": "Long subscription URL for the audience"
           },
           {
             "name": "subscribe_url_short",
-            "type": "String"
+            "type": "String",
+            "description": "Short subscription URL for the audience"
           },
           {
             "name": "beamer_address",
-            "type": "String"
+            "type": "String",
+            "description": "Address for beaming content to the audience"
           },
           {
             "name": "visibility",
-            "type": "String"
+            "type": "String",
+            "description": "Visibility setting for the audience"
           },
           {
             "name": "double_optin",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Indicates whether double opt-in is enabled for the audience"
           },
           {
             "name": "has_welcome",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Indicates whether welcome emails are enabled for the audience"
           },
           {
             "name": "marketing_permissions",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Indicates whether marketing permissions are enabled for the audience"
           },
           {
             "name": "contact",
-            "type": "Contact"
+            "type": "Contact",
+            "description": "Contact information for the audience"
           },
           {
             "name": "stats",
-            "type": "Stats"
+            "type": "Stats",
+            "description": "Statistics for the audience"
           },
           {
             "name": "members",
-            "type": "MemberCollection"
+            "type": "MemberCollection",
+            "description": "Collection of members belonging to the audience"
           }
         ],
         "events": [
           {
             "name": "subscribed",
-            "type": "MemberEvent"
+            "type": "MemberEvent",
+            "description": "Event indicating that a member has subscribed to the audience"
           },
           {
             "name": "unsubscribed",
-            "type": "MemberEvent"
+            "type": "MemberEvent",
+            "description": "Event indicating that a member has unsubscribed from the audience"
           }
-        ]
+        ],
+        "description": "Type representing an audience in Mailchimp"
       },
       {
         "name": "MemberCollection",
@@ -253,9 +295,11 @@
             "params": [
               {
                 "name": "hash",
-                "type": "String"
+                "type": "String",
+                "description": "Unique hash identifier for the member"
               }
-            ]
+            ],
+            "description": "Field representing a single member in the Mailchimp collection"
           },
           {
             "name": "page",
@@ -264,28 +308,34 @@
               {
                 "name": "fields",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "Fields to include in the member page"
               },
               {
                 "name": "count",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "Number of members to include in the page"
               },
               {
                 "name": "email",
                 "type": "String",
-                "optional": true
+                "optional": true,
+                "description": "Email address of the member to include in the page"
               },
               {
                 "name": "offset",
                 "type": "Int",
-                "optional": true
+                "optional": true,
+                "description": "Offset for paginating through the members"
               }
-            ]
+            ],
+            "description": "Field representing a page of members in the Mailchimp collection"
           }
         ],
         "actions": [],
-        "events": []
+        "events": [],
+        "description": "Collection of Mailchimp members"
       },
       {
         "name": "MemberPage",
@@ -294,240 +344,296 @@
             "name": "items",
             "type": "List",
             "ofType": "Member",
-            "params": []
+            "params": [],
+            "description": "List of members in the page."
           },
           {
             "name": "next",
             "type": "Ref",
             "ofType": "MemberPage",
-            "params": []
+            "params": [],
+            "description": "Reference to the next page of members."
           }
         ],
         "actions": [],
-        "events": []
+        "events": [],
+        "description": "Type representing a page of members."
       },
       {
         "name": "Member",
         "fields": [
           {
             "name": "id",
-            "type": "String"
+            "type": "String",
+            "description": "The unique identifier of the member"
           },
           {
             "name": "email_address",
             "type": "String",
             "hints": {
               "primary": true
-            }
+            },
+            "description": "The email address of the member"
           },
           {
             "name": "unique_email_id",
-            "type": "String"
+            "type": "String",
+            "description": "The unique email id of the member"
           },
           {
             "name": "contact_id",
-            "type": "String"
+            "type": "String",
+            "description": "The contact id of the member"
           },
           {
             "name": "full_name",
-            "type": "String"
+            "type": "String",
+            "description": "The full name of the member"
           },
           {
             "name": "web_id",
-            "type": "Int"
+            "type": "Int",
+            "description": "The web id of the member"
           },
           {
             "name": "email_type",
-            "type": "String"
+            "type": "String",
+            "description": "The email type of the member"
           },
           {
             "name": "status",
-            "type": "String"
+            "type": "String",
+            "description": "The status of the member"
           },
           {
             "name": "unsubscribe_reason",
-            "type": "String"
+            "type": "String",
+            "description": "The reason for unsubscribing of the member"
           },
           {
             "name": "consents_to_one_to_one_messaging",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Indicates whether the member consents to one-to-one messaging"
           },
           {
             "name": "merge_fields",
-            "type": "MergeFields"
+            "type": "MergeFields",
+            "description": "The merge fields of the member"
           },
           {
             "name": "interests",
-            "type": "Interests"
+            "type": "Interests",
+            "description": "The interests of the member"
           },
           {
             "name": "stats",
-            "type": "Stats"
+            "type": "Stats",
+            "description": "The stats of the member"
           },
           {
             "name": "ip_signup",
-            "type": "String"
+            "type": "String",
+            "description": "The IP address of the member at the time of signup"
           },
           {
             "name": "timestamp_signup",
-            "type": "String"
+            "type": "String",
+            "description": "The timestamp of the member's signup"
           },
           {
             "name": "ip_opt",
-            "type": "String"
+            "type": "String",
+            "description": "The IP address of the member at the time of opting in"
           },
           {
             "name": "timestamp_opt",
-            "type": "String"
+            "type": "String",
+            "description": "The timestamp of the member's opting in"
           },
           {
             "name": "member_rating",
-            "type": "Int"
+            "type": "Int",
+            "description": "The rating of the member"
           },
           {
             "name": "last_changed",
-            "type": "String"
+            "type": "String",
+            "description": "The timestamp of the member's last change"
           },
           {
             "name": "language",
-            "type": "String"
+            "type": "String",
+            "description": "The language preference of the member"
           },
           {
             "name": "vip",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Indicates whether the member is a VIP"
           },
           {
             "name": "email_client",
-            "type": "String"
+            "type": "String",
+            "description": "The email client used by the member"
           },
           {
             "name": "location",
-            "type": "Location"
+            "type": "Location",
+            "description": "The location of the member"
           },
           {
             "name": "marketing_permissions",
             "type": "List",
-            "ofType": "MarketingPermissions"
+            "ofType": "MarketingPermissions",
+            "description": "The marketing permissions of the member"
           },
           {
             "name": "last_note",
-            "type": "LastNote"
+            "type": "LastNote",
+            "description": "The last note added for the member"
           },
           {
             "name": "source",
-            "type": "String"
+            "type": "String",
+            "description": "The source of the member"
           },
           {
             "name": "tags_count",
-            "type": "Int"
+            "type": "Int",
+            "description": "The count of tags associated with the member"
           },
           {
             "name": "tags",
             "type": "List",
-            "ofType": "Tags"
+            "ofType": "Tags",
+            "description": "The tags associated with the member"
           },
           {
             "name": "list_id",
-            "type": "String"
+            "type": "String",
+            "description": "The ID of the list to which the member belongs"
           }
-        ]
+        ],
+        "description": "Type representing a member in Mailchimp"
       },
       {
         "name": "MergeFields",
         "fields": [
           {
             "name": "property1",
-            "type": "String"
+            "type": "String",
+            "description": "First property of the merge fields"
           },
           {
             "name": "property2",
-            "type": "String"
+            "type": "String",
+            "description": "Second property of the merge fields"
           }
-        ]
+        ],
+        "description": "Type for managing merge fields in Mailchimp"
       },
       {
         "name": "Interests",
         "fields": [
           {
             "name": "property1",
-            "type": "String"
+            "type": "String",
+            "description": "Property for storing interest category"
           },
           {
             "name": "property2",
-            "type": "String"
+            "type": "String",
+            "description": "Property for storing interest value"
           }
-        ]
+        ],
+        "description": "Type for managing interests in Mailchimp"
       },
       {
         "name": "Location",
         "fields": [
           {
             "name": "latitude",
-            "type": "Float"
+            "type": "Float",
+            "description": "The latitude of the geographical location."
           },
           {
             "name": "longitude",
-            "type": "Float"
+            "type": "Float",
+            "description": "The longitude of the geographical location."
           },
           {
             "name": "gmtoff",
-            "type": "Int"
+            "type": "Int",
+            "description": "The offset from GMT of the geographical location."
           },
           {
             "name": "dstoff",
-            "type": "Int"
+            "type": "Int",
+            "description": "The offset from DST of the geographical location."
           },
           {
             "name": "country_code",
-            "type": "String"
+            "type": "String",
+            "description": "The country code of the geographical location."
           },
           {
             "name": "timezone",
-            "type": "String"
+            "type": "String",
+            "description": "The timezone of the geographical location."
           },
           {
             "name": "region",
-            "type": "String"
+            "type": "String",
+            "description": "The region of the geographical location."
           }
-        ]
+        ],
+        "description": "Type representing the geographical location information."
       },
       {
         "name": "MarketingPermissions",
         "fields": [
           {
             "name": "marketing_permission_id",
-            "type": "String"
+            "type": "String",
+            "description": "The ID of the marketing permission"
           },
           {
             "name": "text",
-            "type": "String"
+            "type": "String",
+            "description": "The text of the marketing permission"
           },
           {
             "name": "enabled",
-            "type": "Boolean"
+            "type": "Boolean",
+            "description": "Indicates whether the marketing permission is enabled"
           }
-        ]
+        ],
+        "description": "Type representing marketing permissions in Mailchimp"
       },
       {
         "name": "LastNote",
         "fields": [
           {
             "name": "note_id",
-            "type": "Int"
+            "type": "Int",
+            "description": "Identifier for the note"
           },
           {
             "name": "created_at",
-            "type": "String"
+            "type": "String",
+            "description": "Date and time when the note was created"
           },
           {
             "name": "created_by",
-            "type": "String"
+            "type": "String",
+            "description": "Creator of the note"
           },
           {
             "name": "note",
-            "type": "String"
+            "type": "String",
+            "description": "Content of the note"
           }
-        ]
+        ],
+        "description": "Type representing the last note in Mailchimp"
       },
       {
         "name": "Tags",
@@ -540,117 +646,145 @@
             "name": "name",
             "type": "String"
           }
-        ]
+        ],
+        "description": "Type representing a tag in Mailchimp"
       },
       {
         "name": "Contact",
         "fields": [
           {
             "name": "company",
-            "type": "String"
+            "type": "String",
+            "description": "The company name."
           },
           {
             "name": "address1",
-            "type": "String"
+            "type": "String",
+            "description": "The first line of the address."
           },
           {
             "name": "address2",
-            "type": "String"
+            "type": "String",
+            "description": "The second line of the address."
           },
           {
             "name": "city",
-            "type": "String"
+            "type": "String",
+            "description": "The city."
           },
           {
             "name": "state",
-            "type": "String"
+            "type": "String",
+            "description": "The state."
           },
           {
             "name": "zip",
-            "type": "String"
+            "type": "String",
+            "description": "The zip code."
           },
           {
             "name": "country",
-            "type": "String"
+            "type": "String",
+            "description": "The country."
           },
           {
             "name": "phone",
-            "type": "String"
+            "type": "String",
+            "description": "The phone number."
           }
-        ]
+        ],
+        "description": "Type representing contact information."
       },
       {
         "name": "Stats",
         "fields": [
           {
             "name": "member_count",
-            "type": "Int"
+            "type": "Int",
+            "description": "The count of members in the Mailchimp integration."
           },
           {
             "name": "total_contacts",
-            "type": "Int"
+            "type": "Int",
+            "description": "The total number of contacts in the Mailchimp integration."
           },
           {
             "name": "unsubscribe_count",
-            "type": "Int"
+            "type": "Int",
+            "description": "The count of unsubscribed contacts in the Mailchimp integration."
           },
           {
             "name": "cleaned_count",
-            "type": "Int"
+            "type": "Int",
+            "description": "The count of cleaned contacts in the Mailchimp integration."
           },
           {
             "name": "member_count_since_send",
-            "type": "Int"
+            "type": "Int",
+            "description": "The count of members since the last send in the Mailchimp integration."
           },
           {
             "name": "unsubscribe_count_since_send",
-            "type": "Int"
+            "type": "Int",
+            "description": "The count of unsubscribed contacts since the last send in the Mailchimp integration."
           },
           {
             "name": "cleaned_count_since_send",
-            "type": "Int"
+            "type": "Int",
+            "description": "The count of cleaned contacts since the last send in the Mailchimp integration."
           },
           {
             "name": "campaign_count",
-            "type": "Int"
+            "type": "Int",
+            "description": "The count of campaigns in the Mailchimp integration."
           },
           {
             "name": "campaign_last_sent",
-            "type": "String"
+            "type": "String",
+            "description": "The date of the last sent campaign in the Mailchimp integration."
           },
           {
             "name": "merge_field_count",
-            "type": "Int"
+            "type": "Int",
+            "description": "The count of merge fields in the Mailchimp integration."
           },
           {
             "name": "avg_sub_rate",
-            "type": "Int"
+            "type": "Int",
+            "description": "The average subscription rate in the Mailchimp integration."
           },
           {
             "name": "avg_unsub_rate",
-            "type": "Int"
+            "type": "Int",
+            "description": "The average unsubscription rate in the Mailchimp integration."
           },
           {
             "name": "target_sub_rate",
-            "type": "Int"
+            "type": "Int",
+            "description": "The target subscription rate in the Mailchimp integration."
           },
           {
             "name": "open_rate",
-            "type": "Int"
+            "type": "Int",
+            "description": "The open rate of campaigns in the Mailchimp integration."
           },
           {
             "name": "click_rate",
-            "type": "Int"
+            "type": "Int",
+            "description": "The click rate of campaigns in the Mailchimp integration."
           },
           {
             "name": "last_sub_date",
-            "type": "String"
+            "type": "String",
+            "description": "The date of the last subscription in the Mailchimp integration."
           },
           {
             "name": "last_unsub_date",
-            "type": "String"
+            "type": "String",
+            "description": "The date of the last unsubscription in the Mailchimp integration."
           }
-        ]
+        ],
+        "description": "Type representing the statistics of the Mailchimp integration."
       },
       {
         "name": "MemberEvent",
@@ -658,18 +792,22 @@
           {
             "name": "member",
             "type": "Ref",
-            "ofType": "Member"
+            "ofType": "Member",
+            "description": "Reference to the member related to the event."
           },
           {
             "name": "email",
-            "type": "String"
+            "type": "String",
+            "description": "The email associated with the event."
           },
           {
             "name": "audience",
             "type": "Ref",
-            "ofType": "Audience"
+            "ofType": "Audience",
+            "description": "Reference to the audience related to the event."
           }
-        ]
+        ],
+        "description": "Type representing an event related to a member in the Mailchimp driver."
       },
       {
         "name": "Tests",
